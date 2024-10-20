@@ -42,7 +42,7 @@
 
     <!-- Link to retake or exit -->
     <div class="d-flex justify-content-between">
-        <a href="{{ route('exam.student') }}" class="btn btn-primary">Retake Exam</a>
+        <a href="{{ route('exam.start') }}" class="btn btn-primary">Retake Exam</a>
         <a href="/" class="btn btn-secondary">Exit</a>
     </div>
 </div>

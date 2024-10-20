@@ -29,7 +29,6 @@ Route::get('/instructor/create-exam', [App\Http\Controllers\ExamController::clas
 Route::post('/instructor/store-exam', [App\Http\Controllers\ExamController::class, 'store'])->name('exam.store');
 Route::get('/student/take-exam', [App\Http\Controllers\ExamController::class, 'studentExam'])->name('exam.start');
 // Route for submitting the exam and viewing results
-Route::post('/student/submit-exam', [App\Http\Controllers\ExamController::class, 'submit.Exam'])->name('exam.submit');
-
+Route::post('/student/submit-exam', [App\Http\Controllers\ExamController::class, 'submitExam'])->name('exam.submit');
 
 

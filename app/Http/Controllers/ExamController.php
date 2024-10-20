@@ -37,13 +37,14 @@ class ExamController extends Controller
             ]);
         }
 
-        return redirect()->route('exam.student')->with('success', 'Exam created successfully.');
+        return redirect()->route('exam.result')->with('success', 'Exam created successfully.');
     }
-
+    public function studentResult() {  return view('exam-result', compact('studentAnswers', 'questions', 'score', 'totalQuestions', 'percentage'));
+}
     // Show the exam to the student
     public function studentExam() {
         $exam = Exam::all(); // Retrieve all exam questions
-        return view('student.take-exam', compact('exam'));
+        return view('take-exam', compact('exam'));
     }
        // Method to submit the exam and show results
        public function submitExam(Request $request) {
@@ -62,7 +63,7 @@ class ExamController extends Controller
         $percentage = ($score / $totalQuestions) * 100;
 
         // Pass the data to the results view
-        return view('student.exam-result', compact('studentAnswers', 'questions', 'score', 'totalQuestions', 'percentage'));
+        return view('exam-result', compact('studentAnswers', 'questions', 'score', 'totalQuestions', 'percentage'));
     }
 
 }

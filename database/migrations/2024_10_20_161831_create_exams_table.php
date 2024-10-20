@@ -9,11 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('exams', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); // Primary key
+            $table->string('exam_name'); // Name of the exam, e.g., "Basic Airport Operation"
+            $table->text('question'); // The exam question
+            $table->string('option_a'); // Option A
+            $table->string('option_b'); // Option B
+            $table->string('option_c'); // Option C
+            $table->string('option_d'); // Option D
+            $table->string('correct_answer'); // Correct answer (A, B, C, or D)
+            $table->timestamps(); // To record created_at and updated_at timestamps
         });
     }
 
