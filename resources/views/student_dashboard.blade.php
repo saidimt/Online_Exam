@@ -24,6 +24,7 @@
                             <li class="list-group-item">Quiz</li>
                             <li class="list-group-item">Test</li>
                             <li class="list-group-item">End of Course Exam</li>
+                            <li class="list-group-item">Aptitude Tests Online</li>
                         </ul>
                         
                         <p class="mt-3">

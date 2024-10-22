@@ -27,16 +27,28 @@
   <div class="dropdown ms-3">
     <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none"
       href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <span class="d-none d-md-block me-2">admin@info.com</span>
+      <span class="d-none d-md-block me-2">{{auth()->user()->email}}</span>
+      @role('instructor')
+
+      <img src="{{asset('assets/images/mweya.png')}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
+  @endrole
+  @role('student')
+
       <img src="{{asset('assets/images/profile.jpg')}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
+  @endrole
     </a>
     <div class="dropdown-menu dropdown-menu-end shadow">
       <a class="dropdown-item d-flex align-items-center" href="profile.html"><i
           class="bi bi-person fs-4 me-2"></i>Profile</a>
       <a class="dropdown-item d-flex align-items-center" href="settings.html"><i
           class="bi bi-gear fs-4 me-2"></i>Account Settings</a>
-      <a class="dropdown-item d-flex align-items-center" href="login.html"><i
-          class="bi bi-escape fs-4 me-2"></i>Logout</a>
+      <a class="dropdown-item d-flex align-items-center" href="{{route('logout')}}" onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();"> 
+        <i class="bi bi-escape fs-4 me-2"></i>{{ __('Logout') }}
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          @csrf
+      </form>
     </div>
   </div>
 </div>

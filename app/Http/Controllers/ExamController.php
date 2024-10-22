@@ -12,6 +12,12 @@ class ExamController extends Controller
         return view('instructor.create-exam');
     }
 
+    public function create_test () {
+        return view('instructor.create-test');
+    }
+    public function create_quizy () {
+        return view('instructor.create-quizy');
+    }
     // Store the exam questions in the database
     public function store(Request $request) {
         $validated = $request->validate([
@@ -37,7 +43,8 @@ class ExamController extends Controller
             ]);
         }
 
-        return redirect()->route('exam.result')->with('success', 'Exam created successfully.');
+        return redirect()->route('welcome')->with('success', 'Exam created successfully.');
+        // return redirect()->route('exam.result')->with('success', 'Exam created successfully.');
     }
     public function studentResult() {  return view('exam-result', compact('studentAnswers', 'questions', 'score', 'totalQuestions', 'percentage'));
 }

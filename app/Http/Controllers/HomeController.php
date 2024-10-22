@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -27,7 +27,7 @@ class HomeController extends Controller
     }
     public function welcome()
     {
-        return view('welcome');
+        return view('student_dashboard');
     }
     public function instruction()
     {
@@ -43,10 +43,10 @@ class HomeController extends Controller
     }
     public function take_test()
     {
-        return view('instruction');
+        return view('instruction_t');
     }
     public function take_quizy()
     {
-        return view('instruction');
+        return view('instruction_q');
     }
 }

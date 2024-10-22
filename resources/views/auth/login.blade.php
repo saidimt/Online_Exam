@@ -17,7 +17,7 @@
             <div class="login-form">
                 <div class="bg-white border border-dark rounded-2 p-4 mt-1">
                     <div class="mb-3">
-                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Username" />
+                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Username" />
                         @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -25,7 +25,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="pwd" placeholder="Password" />
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="pwd" placeholder="Password" />
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
