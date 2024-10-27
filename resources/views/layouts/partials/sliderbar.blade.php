@@ -106,6 +106,12 @@
                     <span class="menu-text"> Exam Types</span>
                   </a>
                 </li>
+                <li class="{{Route::is('academic.students')?'active current-page ':''}} ">
+                  <a href="{{route('academic.students')}}">
+                    <i class="bi bi-wallet2"></i>
+                    <span class="menu-text"> Students </span>
+                  </a>
+                </li>
                 @endrole
 
                 <!-- <li class="{{Route::is('take_exam')?'active current-page ':''}} ">

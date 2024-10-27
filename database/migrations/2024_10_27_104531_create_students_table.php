@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name',20);
             $table->string('middle_name',20)->nullable();
             $table->string('sur_name',20);
+            
             $table->string('registration_no',15)->unique();
             $table->string('user_id')->unique(); // This will be used for login identification
             $table->timestamps();

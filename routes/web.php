@@ -72,11 +72,16 @@ Route::prefix('/academic')->middleware('auth','role:academic')->group(function (
         // Grouping ExamTypesController routes
         Route::controller(\App\Http\Controllers\Academic\ExamTypeContoller::class)->group(function () {
             Route::get('/exam-types', 'index')->name('academic.exam-types');
+            // Route::get('/exam-types', 'create')->name('academic.exam-types.create');
             // Add other instructor-specific routes here
         });
-        // Grouping InstructorController routes
-        Route::controller(\App\Http\Controllers\Academic\HomeContoller::class)->group(function () {
-            Route::get('/dashboard', 'index')->name('academic.dashboard');
+        // Grouping studentController routes
+        Route::controller(\App\Http\Controllers\Academic\StudentContoller::class)->group(function () {
+            Route::get('/students', 'index')->name('academic.students');
+            Route::get('/students/register', 'create')->name('academic.students.create');
+            Route::post('/students/register', 'store')->name('academic.students.store');
+            Route::get('/students/import', 'import')->name('academic.students.import');
+            Route::post('/students/import', 'importStudents')->name('academic.import.students');
             // Add other instructor-specific routes here
         });
         // Grouping InstructorController routes

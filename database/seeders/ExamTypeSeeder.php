@@ -16,19 +16,16 @@ class ExamTypeSeeder extends Seeder
         $Exam = DB::table('exam_types')->insert(
             [    'name' => "Quiz",
 
-          
         ]);
         $Exam = DB::table('exam_types')->insert([
             'name' => "Test",
-            
           
         ]);
         $Exam = DB::table('exam_types')->insert(
 
         [
             'name' => "Examination",
-            
-          
+        
         ]);
     }
 }
