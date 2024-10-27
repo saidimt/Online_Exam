@@ -50,8 +50,9 @@ class ExamController extends Controller
 }
     // Show the exam to the student
     public function studentExam() {
+        $examDuration=01;
         $exam = Exam::all(); // Retrieve all exam questions
-        return view('take-exam', compact('exam'));
+        return view('take-exam', compact('exam','examDuration'));
     }
        // Method to submit the exam and show results
        public function submitExam(Request $request) {

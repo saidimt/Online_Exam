@@ -17,7 +17,11 @@
 <link rel="stylesheet" href="{{asset('assets/fonts/bootstrap/bootstrap-icons.css')}}" />
 <link rel="stylesheet" href="{{asset('assets/css/main.min.css')}}" />
 <link rel="stylesheet" href="{{asset('assets/vendor/overlay-scroll/OverlayScrollbars.min.css')}}" />
-    </head>
+<style>
+  [x-cloak] { display: none !important; }
+</style> 
+@livewireStyles   
+</head>
 
     <body>
       <!-- Page wrapper start -->
@@ -66,7 +70,7 @@
 
         </div>
         <!-- Main container end -->
-
+        @livewireScripts
       </div>
       <!-- Page wrapper end -->
 

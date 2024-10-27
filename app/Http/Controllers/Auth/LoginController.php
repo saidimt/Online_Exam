@@ -30,11 +30,15 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         // Check the authenticated user's role
-        $user = Auth::user();
-        if ($user->hasRole('instructor')) {
-            return '/instructor/dashboard'; // Redirect to instructor dashboard
-        } elseif ($user->hasRole('student')) {
-            return '/student/dashboard'; // Redirect to student dashboard
+      
+        $roles=\App\Models\Role::all();
+        foreach ($roles as $key)
+         {
+            if(auth()->user()->hasRole($key->name))
+            {
+            return '/'.$key->name.'/dashboard'; // Redirect to User Role dashboard
+
+            }
         }
 
     return redirect()->route('login');
@@ -69,6 +73,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         // $this->middleware('auth')->only('logout');
+    }
+    public function username()
+    {
+        return 'username';
     }
 }
 

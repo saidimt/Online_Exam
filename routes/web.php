@@ -23,7 +23,7 @@ Route::get('/', function () {
 Auth::routes();
 
 // Instructor-specific routes
-Route::middleware('auth','role:instructor|administrator|student')->group(function () {
+Route::middleware('auth','role:instructor|administrator|student|academic')->group(function () {
    
     // Add more instructor-specific routes here
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
@@ -50,11 +50,45 @@ Route::middleware('auth','role:instructor|administrator|student')->group(functio
 // Student-specific routes
 Route::prefix('/student')->middleware('auth','role:student')->group(function () {
 Route::get('/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
-Route::get('/take_quizy', [App\Http\Controllers\HomeController::class, 'take_quizy'])->name('take_quizy');
-Route::get('/take_exam', [App\Http\Controllers\HomeController::class, 'take_exam'])->name('take_exam');
-Route::get('/take_test', [App\Http\Controllers\HomeController::class, 'take_test'])->name('take_test');
+  // Grouping InstructorController routes
+  Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
+    Route::get('/take_quizy',  'take_quizy')->name('take_quizy');
+    Route::get('/take_exam',  'take_exam')->name('take_exam');
+    Route::get('/take_test',  'take_test')->name('take_test');
+
+    // Add other instructor-specific routes here
+});
 
     // Add more student-specific routes here
+});
+
+Route::prefix('/academic')->middleware('auth','role:academic')->group(function () {
+    
+    // Grouping InstructorController routes
+        Route::controller(\App\Http\Controllers\Academic\HomeContoller::class)->group(function () {
+            Route::get('/dashboard', 'index')->name('academic.dashboard');
+            // Add other instructor-specific routes here
+        });
+        // Grouping ExamTypesController routes
+        Route::controller(\App\Http\Controllers\Academic\ExamTypeContoller::class)->group(function () {
+            Route::get('/exam-types', 'index')->name('academic.exam-types');
+            // Add other instructor-specific routes here
+        });
+        // Grouping InstructorController routes
+        Route::controller(\App\Http\Controllers\Academic\HomeContoller::class)->group(function () {
+            Route::get('/dashboard', 'index')->name('academic.dashboard');
+            // Add other instructor-specific routes here
+        });
+        // Grouping InstructorController routes
+        Route::controller(\App\Http\Controllers\Academic\HomeContoller::class)->group(function () {
+            Route::get('/dashboard', 'index')->name('academic.dashboard');
+            // Add other instructor-specific routes here
+        });
+        // Grouping InstructorController routes
+        Route::controller(\App\Http\Controllers\Academic\HomeContoller::class)->group(function () {
+            Route::get('/dashboard', 'index')->name('academic.dashboard');
+            // Add other instructor-specific routes here
+        });
 });
 
 

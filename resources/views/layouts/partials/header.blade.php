@@ -13,11 +13,11 @@
 <!-- Toggle buttons end -->
 
 <!-- App brand sm start -->
-<div class="app-brand-sm d-md-none d-sm-block">
+{{-- <div class="app-brand-sm d-md-none d-sm-block">
   <a href="index.html">
     <img src="{{asset('assets/images/logo-sm.svg')}}" class="logo" alt="Bootstrap Gallery">
   </a>
-</div>
+</div> --}}
 <!-- App brand sm end -->
 
 <!-- App header actions start -->
@@ -27,15 +27,11 @@
   <div class="dropdown ms-3">
     <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none"
       href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <span class="d-none d-md-block me-2">{{auth()->user()->email}}</span>
-      @role('instructor')
+      <span class="d-none d-md-block me-2">{{auth()->user()->username}}</span>
+     
 
-      <img src="{{asset('assets/images/mweya.png')}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
-  @endrole
-  @role('student')
-
-      <img src="{{asset('assets/images/profile.jpg')}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
-  @endrole
+      <img src="{{asset(auth()->user()->picture)}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
+ 
     </a>
     <div class="dropdown-menu dropdown-menu-end shadow">
       <a class="dropdown-item d-flex align-items-center" href="profile.html"><i

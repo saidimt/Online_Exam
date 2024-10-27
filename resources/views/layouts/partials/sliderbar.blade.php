@@ -11,14 +11,9 @@
 
 <!-- Sidebar profile starts -->
 <div class="sidebar-user-profile">
-  @role('instructor')
 
-  <img src="{{asset('assets/images/mweya.png')}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
-@endrole
-@role('student')
+  <img src="{{asset(auth()->user()->picture)}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
 
-  <img src="{{asset('assets/images/profile.jpg')}}" class="rounded-4 img-3x" alt="Bootstrap Gallery" />
-@endrole
 
   <h5 class="profile-name lh-lg mt-2 text-truncate">{{auth()->user()->name}}</h5>
   <!-- <ul class="profile-actions d-flex m-0 p-0">
@@ -60,7 +55,7 @@
                 <li class="{{Route::is('quizy.create')?'active current-page ':''}} ">
                   <a href="{{route('quizy.create')}}">
                     <i class="bi bi-calendar4"></i>
-                    <span class="menu-text">Create Quizy</span>
+                    <span class="menu-text">Create Quiz</span>
                   </a>
                 </li>
                 <li class="{{Route::is('test.create')?'active current-page ':''}} ">
@@ -81,7 +76,7 @@
                 <li class="{{Route::is('take_quizy')?'active current-page ':''}} ">
                   <a href="{{route('take_quizy')}}">
                     <i class="bi bi-calendar4"></i>
-                    <span class="menu-text">Take Quizy</span>
+                    <span class="menu-text">Take Quiz</span>
                   </a>
                 </li>
                 <li class="{{Route::is('take_test')?'active current-page ':''}} ">
@@ -96,8 +91,23 @@
                     <span class="menu-text">Take Exam</span>
                   </a>
                 </li>
-
                 @endrole
+                @role('academic')
+
+                <li class="{{Route::is('academic.dashboard')?'active current-page':''}} ">
+                  <a href="{{route('academic.dashboard')}}">
+                    <i class="bi bi-tv"></i>
+                    <span class="menu-text">Dashboard</span>
+                  </a>
+                </li>
+                <li class="{{Route::is('academic.exam-types')?'active current-page ':''}} ">
+                  <a href="{{route('academic.exam-types')}}">
+                    <i class="bi bi-calendar4"></i>
+                    <span class="menu-text"> Exam Types</span>
+                  </a>
+                </li>
+                @endrole
+
                 <!-- <li class="{{Route::is('take_exam')?'active current-page ':''}} ">
                   <a href="{{route('take_exam')}}">
                     <i class="bi bi-calendar4"></i>

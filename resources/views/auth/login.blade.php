@@ -17,8 +17,8 @@
             <div class="login-form">
                 <div class="bg-white border border-dark rounded-2 p-4 mt-1">
                     <div class="mb-3">
-                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Username" />
-                        @error('email')
+                        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="Username" />
+                        @error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

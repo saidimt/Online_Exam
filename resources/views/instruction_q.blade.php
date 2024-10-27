@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h4 class="text-center">Quizy Instructions</h4>
+                    <h4 class="text-center">Quiz Instructions</h4>
                 </div>
                 <div class="card-body">
                     <!-- Examination Type -->

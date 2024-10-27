@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <h2>Basic Airport Operation - Qizy</h2>
+    <h2>Basic Airport Operation - Quiz</h2>
 
     <form action="{{ route('exam.submit') }}" method="POST">
         @csrf
