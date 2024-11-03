@@ -13,8 +13,10 @@ return [
 
     'roles_structure' => [
         'instructor' => [
-            'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
+            'student' => 'r',
+            'course' => 'r',
+            'subject' => 'r',
+            'course_subject' => 'r',
             'profile' => 'r,u',
         ],
         'administrator' => [
@@ -23,9 +25,20 @@ return [
         ],
         'student' => [
             'profile' => 'r,u',
+            'exam' => 'r,u',
+
         ],
         'academic' => [
             'module_1_name' => 'c,r,u,d',
+        ],
+        'registrar' => [
+            'instructor' => 'c,r,u,d',
+            'student' => 'c,r,u,d',
+            'course' => 'c,r,u,d',
+            'subject' => 'c,r,u,d',
+            'course_subject' => 'c,r,u,d',
+            'exam_type' => 'c,r,u,d',
+
         ],
     ],
 

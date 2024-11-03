@@ -1,0 +1,1 @@
+<img src="assets/images/flags/1x1/hk.svg" class="img-1xx me-2" alt="Hong Kong">

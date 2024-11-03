@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_list_id'); 
             $table->string('course_number',20); 
+            $table->date('course_start_date'); 
+            $table->date('course_end_date'); 
+            $table->foreignId('course_status_id')->default('1'); 
             $table->foreignId('user_id'); 
             $table->timestamps();
         });

@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Academic;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeContoller extends Controller
+class ExamTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('academic.dashboard');
+        return view('exam-types.index');
         //
     }
 

@@ -1,29 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Academic;
+namespace App\Http\Controllers\Registrar;
 
-use App\Http\Controllers\Controller;
-use App\Imports\Academic\StudentsImport;
+use App\Models\User;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
-use App\Models\{Student,User,StudentCourse};
-use Maatwebsite\Excel\Facades\Excel;
-class StudentContoller extends Controller
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+
+class RegisterInstructorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('students.index');
+        return view('registrar.instructors.index');
         //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function registerInstructor()
     {
-        return view('students.register_student');
+        return view('registrar.instructors.register_instructor');
         //
     }
 
@@ -34,8 +32,7 @@ class StudentContoller extends Controller
     {
         $request->validate([
             'first_name' => 'required|string|max:20',
-            'registration_no' => 'required|string|max:100|unique:students,registration_no',
-            'course_id' => 'required|string',
+            'email' => 'required|email|max:100|unique:instructors,email',
             'sur_name' => 'required|string|max:20',
             'middle_name' => 'required|string|max:20',
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -66,31 +63,21 @@ class StudentContoller extends Controller
         // Create new student record
        $user= User::create([
             'name' => $request->first_name.' '.$request->middle_name.' '.$request->sur_name,
-            'username' => $request->registration_no,
+            'username' => $request->email,
             'password' => bcrypt($request->sur_name),
             'picture' => $profilePicturePath,
         ]);
-        $user->addRole('student');
-
-
+            $user->addRole('instructor');
+            $request['user_id'] =$user->id;
+            $request['created_by'] =auth()->user()->id;
          // Create new student record
-         $student = Student::create([
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'sur_name' => $request->sur_name,
-            'registration_no' => $request->registration_no,
-            'user_id' => $user->id,
-        ]);
-
-         // Create new student record
-         StudentCourse::create([
-            'student_id' => $student->id,
-            'course_id' => $request->course_id,
-        ]);
+            Instructor::create( $request->all());
 
 
 
-        return redirect()->route('academic.students')->with('success', 'Student registered successfully.');
+            Alert::success('Course ','Instructor registered successfully.');
+            // Alert::toast('Course list registered successfully.', 'success');
+            return redirect()->route('registrar.instructors');
         //
     }
 
@@ -126,7 +113,7 @@ class StudentContoller extends Controller
         //
     }public function import()
     {
-        return view('students.import_student');
+        return view('registrar.instructors.import_student');
         //
     }
     public function importStudents(Request $request)

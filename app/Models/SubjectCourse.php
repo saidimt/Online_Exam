@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class SubjectCourse extends Model
 {
     use HasFactory;
-    protected $fillable=[];
-    public function subjec()
+    protected $fillable=[
+        'subject_id',
+        'course_id',
+        'user_id',
+    ];
+    public function subject()
     {
         return $this->belongsTo(Subject::class, 'subject_id', 'id');
     }

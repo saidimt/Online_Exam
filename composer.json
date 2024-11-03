@@ -14,6 +14,7 @@
         "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1",
         "rappasoft/laravel-livewire-tables": "^2.15",
+        "realrashid/sweet-alert": "^7.2",
         "santigarcor/laratrust": "^8.3"
     },
     "require-dev": {

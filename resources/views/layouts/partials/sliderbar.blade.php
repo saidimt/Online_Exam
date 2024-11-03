@@ -113,6 +113,109 @@
                   </a>
                 </li>
                 @endrole
+                @role('registrar')
+
+                <li class="{{Route::is('registrar.dashboard')?'active current-page':''}} ">
+                  <a href="{{route('registrar.dashboard')}}">
+                    <i class="bi bi-tv"></i>
+                    <span class="menu-text">Dashboard</span>
+                  </a>
+                </li>
+               <li class="treeview {{Route::is('registrar.students')|| Route::is('registrar.students.registerStudent')|| Route::is('registrar.students.import') || Route::is('registrar.students.import') ?' active current-page':''}}">
+                  <a href="#!">
+                    <i class="bi bi-book"></i>
+                    <span class="menu-text">Students</span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li>
+                  <a href="{{route('registrar.students')}}" class="treeview {{Route::is('registrar.students') || Route::is('registrar.students.registerStudent')|| Route::is('registrar.students.import') || Route::is('registrar.students.import')?' active-sub':''}}">
+                    Enrolled Students</a>
+                    </li>
+                  
+                      </ul>
+                    </li>
+                      <li class="treeview {{Route::is('registrar.instructors')|| Route::is('registrar.instructors.registerInstructor')|| Route::is('registrar.instructors.import')?' active current-page':''}}">
+                        <a href="#!">
+                          <i class="bi bi-bag"></i>
+                          <span class="menu-text">Instructor</span>
+                        </a>
+                        <ul class="treeview-menu">
+                          {{-- <li>
+                        <a href="{{route('registrar.instructors.registerInstructor')}}">
+                              Register Instructor</a>
+                          </li> --}}
+                          <li>
+                        <a href="{{route('registrar.instructors')}}" class="{{Route::is('registrar.instructors') || Route::is('registrar.instructor.registerInstructor')|| Route::is('registrar.instructors.import')?' active-sub':''}}">
+                              Enrolled Instructor</a>
+                          </li>
+                        
+                            </ul>
+                          </li>
+                            <li class="treeview {{Route::is('registrar.course.index')|| Route::is('registrar.course.create')|| Route::is('registrar.course.edit')|| Route::is('registrar.course-list.index')|| Route::is('registrar.course-list.create')|| Route::is('registrar.course-list.edit')?' active current-page':''}}">
+                                  <a href="#!">
+                                    <i class="bi bi-folder"></i>
+                                    <span class="menu-text">Course</span>
+                                  </a>
+                                  <ul class="treeview-menu">
+                                      <li>
+                                      <a href="{{route('registrar.course-list.index')}}" class="{{Route::is('registrar.course-list.index')|| Route::is('registrar.course-list.create')|| Route::is('registrar.course-list.edit')?' active-sub':''}}">
+                                      Course List</a>
+                                      </li>
+                                      <li>
+                                        <a href="{{route('registrar.course.index')}}" class="{{Route::is('registrar.course.index')|| Route::is('registrar.course.create')|| Route::is('registrar.course.edit')?' active-sub':''}}">
+                                          Registered Courses</a>
+                                      </li>
+                                    
+                                  </ul>
+                            </li>
+
+                            <li class="treeview {{Route::is('registrar.subject.index')|| Route::is('registrar.subject.create')|| Route::is('registrar.subject.edit')|| Route::is('registrar.course-subject.index')|| Route::is('registrar.course-subject.create')|| Route::is('registrar.course-subject.edit')?' active current-page':''}}">
+                              <a href="#!">
+                                <i class="bi bi-briefcase"></i>
+                                <span class="menu-text">Subjects</span>
+                              </a>
+                              <ul class="treeview-menu">
+                                  <li>
+                                  <a href="{{route('registrar.subject.index')}}" class="{{Route::is('registrar.subject.index')|| Route::is('registrar.subject.create')|| Route::is('registrar.subject.edit')?' active-sub':''}}">
+                                  Subject List</a>
+                                  </li>
+                                  <li>
+                                    <a href="{{route('registrar.course-subject.index')}}" class="{{Route::is('registrar.course-subject.index')|| Route::is('registrar.course-subject.create')|| Route::is('registrar.course-subject.edit')?' active-sub':''}}">
+                                      Subject Courses</a>
+                                  </li>
+                                
+                              </ul>
+                        </li>
+
+                                
+                      
+                      
+
+
+
+
+
+
+
+
+                      
+{{--                
+                <li class="{{Route::is('academic.students')?'active current-page ':''}} ">
+                  <a href="{{route('academic.students')}}">
+                    <i class="bi bi-wallet2"></i>
+                    <span class="menu-text">Register Instructor</span>
+                  </a>
+                </li>
+                <li class="{{Route::is('academic.students')?'active current-page ':''}} ">
+                  <a href="{{route('academic.students')}}">
+                    <i class="bi bi-wallet2"></i>
+                    <span class="menu-text">Register Course</span>
+                  </a>
+                </li> --}}
+               
+                @endrole
+
+                
 
                 <!-- <li class="{{Route::is('take_exam')?'active current-page ':''}} ">
                   <a href="{{route('take_exam')}}">

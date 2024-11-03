@@ -17,9 +17,7 @@
 <link rel="stylesheet" href="{{asset('assets/fonts/bootstrap/bootstrap-icons.css')}}" />
 <link rel="stylesheet" href="{{asset('assets/css/main.min.css')}}" />
 <link rel="stylesheet" href="{{asset('assets/vendor/overlay-scroll/OverlayScrollbars.min.css')}}" />
-<style>
-  [x-cloak] { display: none !important; }
-</style> 
+
 @livewireStyles   
 </head>
 
@@ -56,54 +54,32 @@
             <div class="app-body">
 <div class="row min-vh-100">
 
-            @yield('content')
+  @yield('content')
+</div>
+</div>
+<!-- App body ends -->
 
-            </div>
-            </div>
-            <!-- App body ends -->
+@include('layouts.partials.footer')
 
-         @include('layouts.partials.footer') 
-<!-- yield('footer')            -->
+</div>
+<!-- Page wrapper end -->
 
-          </div>
-          <!-- App container ends -->
+<!-- ************ JavaScript Files ************* -->
+<!-- Required jQuery first, then Bootstrap Bundle JS -->
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
-        </div>
-        <!-- Main container end -->
-        @livewireScripts
-      </div>
-      <!-- Page wrapper end -->
+<!-- Vendor JS Files -->
+<script src="{{ asset('assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/overlay-scroll/custom-scrollbar.js') }}"></script>
 
-      <!-- *************
-        ************ JavaScript Files *************
-      ************* -->
-      <!-- Required jQuery first, then Bootstrap Bundle JS -->
-      <script src="assets/js/jquery.min.js"></script>
-      <script src="assets/js/bootstrap.bundle.min.js"></script>
+<!-- Additional Plugins -->
+<script src="{{ asset('assets/vendor/apex/apexcharts.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/apex/custom/graphs/custom-sparkline.js') }}"></script>
+<script src="{{ asset('assets/vendor/newsticker/newsTicker.min.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
 
-      <!-- *************
-        ************ Vendor Js Files *************
-      ************* -->
-
-      <!-- Overlay Scroll JS -->
-      <script src="assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
-      <script src="assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
-
-      <!-- Apex Charts -->
-      <script src="assets/vendor/apex/apexcharts.min.js"></script>
-      <script src="assets/vendor/apex/custom/graphs/custom-sparkline.js"></script>
-      <script src="assets/vendor/apex/custom/analytics/delivery.js"></script>
-      <script src="assets/vendor/apex/custom/analytics/statistics.js"></script>
-      <script src="assets/vendor/apex/custom/analytics/sparkline.js"></script>
-
-      <!-- Newsticker JS -->
-      <script src="assets/vendor/newsticker/newsTicker.min.js"></script>
-      <script src="assets/vendor/newsticker/custom-newsTicker.js"></script>
-
-      <!-- Custom JS files -->
-      <script src="assets/js/custom.js"></script>
-    </body>
-
-
-<!-- Mirrored from bootstrapget.com/demos/templatemonster/adminday-bootstrap-admin-template/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Oct 2024 06:09:36 GMT -->
+@livewireScripts
+@include('sweetalert::alert')
+</body>
 </html>

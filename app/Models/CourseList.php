@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class CourseList extends Model
 {
     use HasFactory;
-    protected $fillable=[];
+    protected $fillable=[
+            'course_name',
+            'course_code',
+            'course_duration',
+            'user_id',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
