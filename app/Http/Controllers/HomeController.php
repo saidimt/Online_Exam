@@ -45,8 +45,10 @@ class HomeController extends Controller
     {
         return view('instruction_t');
     }
-    public function take_quizy()
+    public function take_quiz()
     {
         return view('instruction_q');
+       
     }
+
 }

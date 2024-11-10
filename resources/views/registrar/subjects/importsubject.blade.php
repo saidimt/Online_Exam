@@ -1,41 +1,48 @@
-<!-- resources/views/academic/import.blade.php -->
-@<!-- resources/views/registrar/import.blade.php -->
 @extends('layouts.main')
 
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="fw-light">Import Instructor Details</h3>
-            <p class="text-muted">Please upload an Excel file containing only the following columns: First Name, Middle Name, Surname, and Email.</p>
+            <h3 class="fw-light">Register Subjects</h3>
+            <p class="text-muted">Fill in the details below to register subjects by uploading an Excel file with the subject name and subject code.</p>
         </div>
     </div>
-    <div class="card bg-lightt mb-4">
+    <div class="card bg-light mb-4">
         <div class="card-header">
-            <h5 class="card-title">Import Instructors</h5>
+            <h5 class="card-title">Import Subjects</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('registrar.import.instructors') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('registrar.import.subjects') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- Instructions -->
-                {{-- <div class="alert alert-info mb-4">
-                    <strong>Note:</strong> Ensure that your Excel file includes columns for <strong>First Name</strong>, <strong>Middle Name</strong>, <strong>Surname</strong>, and <strong>Email</strong> only.
-                </div> --}}
-
-                <!-- File Input for Excel File -->
+                <!-- Subject Name -->
                 <div class="col-6 mb-3">
                     <label for="file" class="form-label">Select Excel File:</label>
-                    <input type="file" name="file" class="form-control @error('file') is-invalid @enderror" required accept=".xlsx, .xls, .csv">
+                    <input type="file" name="file" class="form-control @error('file') is-invalid @enderror" required>
                     @error('file')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                     @enderror
                 </div>
 
-                <!-- Submit Button -->
+                <!-- Course Selection (optional if needed for the import) -->
+                <div class="col-6 mb-3">
+                    <label for="course_id" class="form-label">Course Name</label>
+                    <select name="course_id" class="form-select @error('course_id') is-invalid @enderror" required>
+                        <option value="" disabled selected>Select a course</option>
+                        <option value="1" {{ old('course_id') == '1' ? 'selected' : '' }}>Basic Airport Operation Course</option>
+                        <option value="2" {{ old('course_id') == '2' ? 'selected' : '' }}>Flight Operations Course</option>
+                    </select>
+                    @error('course_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
                 <button type="submit" class="btn btn-success">
-                    <i class="bi bi-filetype-xlsx"></i> Import
+                    <i class="bi bi-filetype-xlsx"></i> Import Subjects
                 </button>
             </form>
         </div>
@@ -45,27 +52,18 @@
 
 
 
-
-
-
-
-
-
-
-
-
 {{-- <!-- resources/views/academic/import.blade.php -->
 @extends('layouts.main')
 
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        {{-- <div>
+        <div>
             <h3 class="fw-light">Register Students for Courses</h3>
             <p class="text-muted">Fill in the details below to register students for the Basic Airport Operation Course or Flight Operations Course.</p>
-        </div> --}}
+        </div>
 
-    {{-- </div>
+    </div>
     <div class="card bg-lighth mb-4">
         <div class="card-header">
             <h5 class="card-title">Import Students</h5>

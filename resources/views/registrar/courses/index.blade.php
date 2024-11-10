@@ -4,13 +4,13 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h5 class="fw-light">Courses</h5> 
-                <h3 class="fw-light">Manage</h3>
-            </div> 
+                <h5 class="fw-light">Courses</h5>
+                
+            </div>
 
             <!-- Add Button on the Right -->
             <a href="{{ route('registrar.course.create') }}" class="btn btn-primary">Add Course </a>
-        </div> 
+        </div>
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}

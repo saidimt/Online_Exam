@@ -4,7 +4,7 @@
 
 <div class="container mt-5">
     <div class="card shadow-lg p-4">
-        <h2 class="mb-4 text-center">Create Test</h2>
+        <h2 class="mb-4 text-center">Create Quiz</h2>
 
         <form action="{{ route('exam.store') }}" method="POST">
             @csrf
@@ -62,7 +62,7 @@
 
             <!-- Submit Button -->
             <div class="d-flex justify-content-center mt-4">
-                <button type="submit" class="btn btn-primary w-50">Submit Test</button>
+                <button type="submit" class="btn btn-primary w-50">Submit Quiz</button>
             </div>
         </form>
     </div>
@@ -148,20 +148,14 @@
 
 
 
+{{--
 
-
-
-
-
-
-
-
-{{-- @extends('layouts.main')
+@extends('layouts.main')
 
 @section('content')
 
 <div class="container">
-    <h2>Create Test: Basic Airport Operation</h2>
+    <h2>Create Quiz: Basic Airport Operation</h2>
 
     <form action="{{ route('exam.store') }}" method="POST">
         @csrf

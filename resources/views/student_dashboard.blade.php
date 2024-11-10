@@ -14,19 +14,19 @@
                         <h6 class="fw-light text-truncate">
                             Dear Student, you are now logged in successfully.
                         </h6>
-                        
+
                         <!-- Instruction Message -->
                         <p class="mt-3">
                             Please select the type of examination you wish to take based on your instructor's guidance. You may choose from the following options:
                         </p>
-                        
+
                         <ul class="list-group">
                             <li class="list-group-item">Quiz</li>
                             <li class="list-group-item">Test</li>
                             <li class="list-group-item">End of Course Exam</li>
                             <li class="list-group-item">Aptitude Tests Online</li>
                         </ul>
-                        
+
                         <p class="mt-3">
                             Ensure you have reviewed all instructions provided by your instructor before proceeding.
                         </p>

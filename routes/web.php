@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
-use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\InstructorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,36 +25,47 @@ Auth::routes();
 
 // Instructor-specific routes
 Route::middleware('auth','role:instructor|administrator|student|academic')->group(function () {
-   
+
     // Add more instructor-specific routes here
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
-   
+
     // Routes for the instruct and student pages
-   
+
     Route::get('/student/take-exam', [ExamController::class, 'studentExam'])->name('exam.start');
 
     // Route for submitting the exam and viewing results
     Route::post('/student/submit-exam', [ExamController::class, 'submitExam'])->name('exam.submit');
 });
 
+
+
 // Instructor-specific routes
     Route::prefix('/instructor')->middleware('auth','role:instructor|administrator')->group(function () {
         Route::get('/dashboard', [InstructorController::class, 'index'])->name('instructor.dashboard');
         Route::get('/create-exam', [ExamController::class, 'create'])->name('exam.create');
-        Route::get('/create-quizy', [ExamController::class, 'create_quizy'])->name('quizy.create');
+        Route::get('/create-quiz', [ExamController::class, 'create_quiz'])->name('quiz.create');
         Route::get('/create-test', [ExamController::class, 'create_test'])->name('test.create');
-
         Route::post('/store-exam', [ExamController::class, 'store'])->name('exam.store');
-    // Add more instructor-specific routes here
+
+     // Routes for exam, quiz, and test results
+     Route::get('/exam/results', [App\Http\Controllers\Results\ExamResultsController::class, 'showResults'])->name('exam.results');
+     Route::get('/quiz/results', [App\Http\Controllers\Results\QuizResultsController::class, 'showResults'])->name('quiz.results');
+     Route::get('/test/results', [App\Http\Controllers\Results\TestResultsController::class, 'showResults'])->name('test.results');
 });
 
-// Student-specific routes
-Route::prefix('/student')->middleware('auth','role:student')->group(function () {
-Route::get('/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
-  // Grouping InstructorController routes
-  Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
-    Route::get('/take_quizy',  'take_quizy')->name('take_quizy');
-    Route::get('/take_exam',  'take_exam')->name('take_exam');
+
+
+
+
+
+
+     // Student-specific routes
+     Route::prefix('/student')->middleware('auth','role:student')->group(function () {
+     Route::get('/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
+     // Grouping InstructorController routes
+     Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
+     Route::get('/take_quiz',  'take_quiz')->name('take_quiz');
+     Route::get('/take_exam',  'take_exam')->name('take_exam');
     Route::get('/take_test',  'take_test')->name('take_test');
 
     // Add other instructor-specific routes here
@@ -63,7 +75,7 @@ Route::get('/dashboard', [StudentController::class, 'index'])->name('student.das
 });
 
 Route::prefix('/academic')->middleware('auth','role:academic')->group(function () {
-    
+
     // Grouping InstructorController routes
         Route::controller(\App\Http\Controllers\Academic\HomeController::class)->group(function () {
             Route::get('/dashboard', 'index')->name('academic.dashboard');
@@ -96,7 +108,7 @@ Route::prefix('/academic')->middleware('auth','role:academic')->group(function (
         });
 });
 Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function () {
-    
+
     // Grouping registrar routes
         Route::controller(\App\Http\Controllers\Registrar\HomeController::class)->group(function () {
             Route::get('/dashboard', 'index')->name('registrar.dashboard');
@@ -142,7 +154,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
 
             Route::get('/course-lists/import', 'import')->name('registrar.registrar.course-list.import');
             Route::post('/course-lists/import', 'importCourseList')->name('registrar.course-list.import.courses');
-       
+
 
         // Courses
         Route::get('/courses', 'allCourses')->name('registrar.course.index');
@@ -154,11 +166,11 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
 
         Route::get('/courses/import', 'import')->name('registrar.course.import');
         Route::post('/courses/import', 'importCourse')->name('registrar.course.import.courses');
-   
+
             // Add other instructor-specific routes here
         });
 
-        // Grouping InstructorController routes
+        // Grouping RegistrarController routes
         Route::controller(\App\Http\Controllers\Registrar\RegisterSubjectController::class)->group(function () {
              //    Subject List
             Route::get('/subjects', 'index')->name('registrar.subject.index');
@@ -170,7 +182,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
 
             Route::get('/subjects/import', 'import')->name('registrar.subject.import');
             Route::post('/subjects/import', 'importSubject')->name('registrar.subject.import.courses');
-       
+
 
         // Courses
         Route::get('/course-subjects', 'allCourses')->name('registrar.course-subject.index');
@@ -182,7 +194,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
 
         Route::get('/course-subjects/import', 'import')->name('registrar.course-subjectimport');
         Route::post('/course-subjects/import', 'importCourseSubject')->name('registrar.course-subject.import');
-   
+
             // Add other instructor-specific routes here
             // Add other instructor-specific routes here
         });

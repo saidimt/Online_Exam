@@ -1,19 +1,19 @@
-<!-- resources/views/academic/import.blade.php -->
 @extends('layouts.main')
 
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h3 class="fw-light">Register Students for Courses</h3>
-            <p class="text-muted">Fill in the details below to register students for the Basic Airport Operation Course or Flight Operations Course.</p>
-        </div>
-
-    </div>
-    <div class="card bg-lighth mb-4">
         <div class="card-header">
             <h5 class="card-title">Import Students</h5>
         </div>
+        {{-- <div>
+            <h3 class="fw-light">Import Students for Courses</h3>
+
+        </div> --}}
+
+    </div>
+    <div class="card bg-lighth mb-4">
+
         <div class="card-body">
     <form action="{{ route('academic.import.students') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -40,6 +40,13 @@
             </span>
         @enderror
         </div>
+        <small class="text-muted">Please ensure the file is in Excel format (.xlsx or .xls) and includes only the following columns:</small>
+                    <ul class="text-muted">
+                        <li><strong>First Name</strong></li>
+                        <li><strong>Middle Name</strong></li>
+                        <li><strong>Sur Name</strong></li>
+                        <li><strong>Registration No</strong></li>
+                    </ul>
         <button type="submit" class="btn btn-success">  <i class="bi bi-filetype-xlsx"></i> Import</button>
     </form>
 </div>
