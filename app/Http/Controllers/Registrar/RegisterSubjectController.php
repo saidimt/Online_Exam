@@ -53,7 +53,7 @@ class RegisterSubjectController extends Controller
         return redirect()->route('registrar.course-subject.index');
         //
     }
-  
+
     public function createSubject()
     {
         return view('registrar.subjects.create');
@@ -109,7 +109,7 @@ class RegisterSubjectController extends Controller
     }
     public function import()
     {
-        return view('registrar.students.import_student');
+        return view('registrar.subjects.import_Subject');
         //
     }
     public function importStudents(Request $request)

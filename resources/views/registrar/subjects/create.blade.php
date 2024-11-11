@@ -6,7 +6,7 @@
                 <h3 class="fw-light">Fill in the details below to register subjects.</h3>
             </div>
             <div class="text-end">
-                <a href="{{ route('registrar.instructors.import') }}" class="btn btn-primary">Import Subject</a>
+                <a href="{{ route('registrar.subject.import') }}" class="btn btn-primary">Import Subject</a>
             </div>
         </div>
         <div class="card bg-lightt mb-4">

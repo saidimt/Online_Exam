@@ -152,7 +152,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
             Route::post('/course-lists/update', 'updateCourseList')->name('registrar.course-list.update');
             Route::delete('/course-lists/{id}/delete', 'deleteCourseList')->name('registrar.course-list.delete');
 
-            Route::get('/course-lists/import', 'import')->name('registrar.registrar.course-list.import');
+            Route::get('/course-lists/import', 'import')->name('registrar.course-list.import');
             Route::post('/course-lists/import', 'importCourseList')->name('registrar.course-list.import.courses');
 
 
@@ -181,7 +181,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
             Route::delete('/subjects/{id}/delete', 'deleteSubject')->name('registrar.subject.delete');
 
             Route::get('/subjects/import', 'import')->name('registrar.subject.import');
-            Route::post('/subjects/import', 'importSubject')->name('registrar.subject.import.courses');
+            Route::post('/subjects/import', 'importSubject')->name('registrar.import.subject');
 
 
         // Courses

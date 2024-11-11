@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h5 class="fw-light">Courses</h5>
-                
+
             </div>
 
             <!-- Add Button on the Right -->
