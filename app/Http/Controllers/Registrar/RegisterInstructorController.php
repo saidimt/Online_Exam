@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Registrar;
 
 use App\Models\User;
@@ -12,119 +11,141 @@ class RegisterInstructorController extends Controller
 {
     public function index()
     {
-        return view('registrar.instructors.index');
-        //
+        $instructors = Instructor::all(); // Fetch all instructors
+        return view('registrar.instructors.index', compact('instructors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function registerInstructor()
     {
         return view('registrar.instructors.register_instructor');
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'first_name' => 'required|string|max:20',
-            'email' => 'required|email|max:100|unique:instructors,email',
-            'sur_name' => 'required|string|max:20',
-            'middle_name' => 'required|string|max:20',
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'first_name.*' => 'required|string|max:20',
+            'email.*' => 'required|email|max:100|unique:instructors,email',
+            'sur_name.*' => 'required|string|max:20',
+            'middle_name.*' => 'required|string|max:20',
+            'picture.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Handle profile picture upload
-        // $profilePicturePath = $request->file('picture')->store('pictures', 'public');
+        $profilePicturePath = '';
         if ($request->hasFile('picture')) {
-            $file = $request->file('picture');
-            
-            // Define the file path in the public folder
-            $filePath = 'pictures';
-            
-            // Generate a unique file name
-            $fileName = str_replace('/','_',$request->registration_no). $file->getClientOriginalName();
-            
-            // Move the file to public/pictures
-            $file->move(public_path($filePath), $fileName);
-            
-            // Save the file path in the database, if needed
-            $profilePicturePath = $filePath . '/' . $fileName;
-    
-            // Save to database (example)
-            // $student = new Student();
-            // $student->picture = $profilePicturePath;
-            // $student->save();
+            foreach ($request->file('picture') as $index => $file) {
+                $filePath = 'pictures';
+                $fileName = str_replace('/', '_', $request->email[$index]) . '-' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path($filePath), $fileName);
+                $profilePicturePath = $filePath . '/' . $fileName;
+            }
         }
-        // Create new student record
-       $user= User::create([
-            'name' => $request->first_name.' '.$request->middle_name.' '.$request->sur_name,
-            'username' => $request->email,
-            'password' => bcrypt($request->sur_name),
-            'picture' => $profilePicturePath,
-        ]);
+
+        foreach ($request->first_name as $index => $firstName) {
+            $user = User::create([
+                'name' => $firstName . ' ' . $request->middle_name[$index] . ' ' . $request->sur_name[$index],
+                'username' => $request->email[$index],
+                'password' => bcrypt($request->sur_name[$index]),
+                'picture' => $profilePicturePath,
+            ]);
+
             $user->addRole('instructor');
-            $request['user_id'] =$user->id;
-            $request['created_by'] =auth()->user()->id;
-         // Create new student record
-            Instructor::create( $request->all());
 
+            Instructor::create([
+                'user_id' => $user->id,
+                'created_by' => auth()->user()->id,
+                'first_name' => $firstName,
+                'middle_name' => $request->middle_name[$index],
+                'sur_name' => $request->sur_name[$index],
+                'email' => $request->email[$index],
+                'picture' => $profilePicturePath,
+            ]);
+        }
 
-
-            Alert::success('Course ','Instructor registered successfully.');
-            // Alert::toast('Course list registered successfully.', 'success');
-            return redirect()->route('registrar.instructors');
-        //
+        Alert::success('Instructor Registration', 'Instructor(s) registered successfully.');
+        return redirect()->route('registrar.instructors');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit($id)
     {
-        //
+        $instructor = Instructor::findOrFail($id);
+        return view('registrar.instructors.edit_instructor', compact('instructor'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    // In your InstructorController
+public function update(Request $request, $id)
+{
+    // Validate the incoming data
+    $request->validate([
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
+    ]);
+
+    // Find the instructor
+    $instructor = Instructor::findOrFail($id);
+
+    // Update basic information
+    $instructor->first_name = $request->input('first_name');
+    $instructor->last_name = $request->input('last_name');
+    $instructor->email = $request->input('email');
+
+    // Handle the profile picture upload if a file is uploaded
+    if ($request->hasFile('profile_picture')) {
+        // Delete old profile picture if exists
+        if ($instructor->profile_picture && file_exists(storage_path('app/public/'.$instructor->profile_picture))) {
+            unlink(storage_path('app/public/'.$instructor->profile_picture));
+        }
+
+        // Store the new profile picture
+        $profilePicture = $request->file('profile_picture');
+        $path = $profilePicture->store('profile_pictures', 'public');
+
+        // Update the instructor's profile picture field
+        $instructor->profile_picture = $path;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Save the updated instructor record
+    $instructor->save();
+
+    // Redirect back to the instructor list or show page with a success message
+    return redirect()->route('instructors.index')->with('success', 'Instructor updated successfully');
+}
+
+
+    public function destroy($id)
     {
-        //
+        $instructor = Instructor::findOrFail($id);
+        $user = User::findOrFail($instructor->user_id);
+
+        // Optionally delete the profile picture from the server
+        if (file_exists(public_path($instructor->picture))) {
+            unlink(public_path($instructor->picture));
+        }
+
+        $instructor->delete();
+        $user->delete();
+
+        Alert::success('Instructor Deleted', 'Instructor has been successfully deleted.');
+        return redirect()->route('registrar.instructors');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function import()
     {
-        //
-    }public function import()
-    {
-        return view('registrar.instructors.import_student');
-        //
+        return view('registrar.instructors.import_instructor');
     }
-    public function importStudents(Request $request)
+
+    public function importInstructors(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
-            'course_id' => 'required',
         ]);
-        $courseId = $request->input('course_id');
-        Excel::import(new StudentsImport($courseId), $request->file('file'));
 
-    return redirect()->route('academic.students')->with('success', 'Students Imported successfully.');
+        // You would need to implement an import logic here (e.g., using a package like Maatwebsite Excel)
+
+        Alert::success('Instructors Imported', 'Instructors have been imported successfully.');
+        return redirect()->route('registrar.instructors');
     }
 }
+
+

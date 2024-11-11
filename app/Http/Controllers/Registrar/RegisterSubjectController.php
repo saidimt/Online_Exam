@@ -87,26 +87,74 @@ class RegisterSubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+   /**
+ * Show the form for editing the specified resource.
+ */
+public function editSubject(string $id)
+{
+    // Find the subject by its ID
+    $subject = Subject::find($id);
+
+    // If the subject doesn't exist, redirect back with an error
+    if (!$subject) {
+        Alert::error('Subject Not Found', 'The subject you are trying to edit does not exist.');
+        return redirect()->route('registrar.subject.index');
     }
+
+    // Pass the subject to the edit view
+    return view('registrar.subjects.edit', compact('subject'));
+}
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    /**
+ * Update the specified resource in storage.
+ */
+public function updateSubject(Request $request, string $id)
+{
+    // Validate the updated data
+    $request->validate([
+        'subject_name' => 'required|max:50',
+        'subject_code' => 'required|string|max:10|unique:subjects,subject_code,' . $id, // Ignore the unique check for the current subject
+    ]);
+
+    // Find the subject by ID
+    $subject = Subject::find($id);
+
+    // If the subject doesn't exist, redirect back with an error
+    if (!$subject) {
+        Alert::error('Subject Not Found', 'The subject you are trying to update does not exist.');
+        return redirect()->route('registrar.subject.index');
     }
+
+    // Update the subject details
+    $subject->update($request->all());
+
+    // Success message
+    Alert::success('Subject Updated', 'Subject updated successfully.');
+    return redirect()->route('registrar.subject.index');
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function deleteSubject(string $id)
+{
+    $subject = Subject::find($id);
+
+    if (!$subject) {
+        Alert::error('Subject Not Found', 'The subject you are trying to delete does not exist.');
+        return redirect()->route('registrar.subject.index');
     }
+
+    $subject->delete();
+    Alert::success('Subject Deleted', 'Subject deleted successfully.');
+    return redirect()->route('registrar.subject.index');
+}
+
     public function import()
     {
         return view('registrar.subjects.import_Subject');

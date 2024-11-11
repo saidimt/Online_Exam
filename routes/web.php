@@ -137,7 +137,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
             Route::post('/students/update', 'update')->name('registrar.students.update');
             Route::get('/students/import', 'import')->name('registrar.students.import');
             Route::post('/students/import', 'importStudents')->name('registrar.import.students');
-            Route::delete('/students/{id}/delete', 'destroy')->name('registrar.students.delete');
+            Route::delete('/students/{id}/delete', 'destroystudent')->name('registrar.students.delete');
             // Add other instructor-specific routes here
         });
 
@@ -151,6 +151,8 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
             Route::get('/course-lists/{id}/update', 'editCourseList')->name('registrar.course-list.edit');
             Route::post('/course-lists/update', 'updateCourseList')->name('registrar.course-list.update');
             Route::delete('/course-lists/{id}/delete', 'deleteCourseList')->name('registrar.course-list.delete');
+            // Route::get('/course-list/edit/{id}', [RegisterCourseController::class, 'editCourseList'])->name('registrar.course-list.edit');
+
 
             Route::get('/course-lists/import', 'import')->name('registrar.course-list.import');
             Route::post('/course-lists/import', 'importCourseList')->name('registrar.course-list.import.courses');
@@ -181,7 +183,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
             Route::delete('/subjects/{id}/delete', 'deleteSubject')->name('registrar.subject.delete');
 
             Route::get('/subjects/import', 'import')->name('registrar.subject.import');
-            Route::post('/subjects/import', 'importSubject')->name('registrar.import.subject');
+            Route::post('/subjects/import', 'importSubject')->name('registrar.importsubject.');
 
 
         // Courses

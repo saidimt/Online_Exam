@@ -119,18 +119,59 @@ class RegisterCourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
+//     public function editCourseList(string $id)
+// {
+//     // Find the course list by its ID
+//     $course_list = CourseList::find($id);
+
+//     // Check if the course list exists
+//     if (!$course_list) {
+//         Alert::error('Course List Not Found', 'The course list you are trying to edit does not exist.');
+//         return redirect()->route('registrar.course-list.index');
+//     }
+
+//     // If the course list exists, pass it to the view for editing
+//     return view('registrar.course-list.edit', compact('course_list'));
+// }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateCourseList(Request $request, string $id)
     {
-        //
+        // Validate the request
+        $request->validate([
+            'course_name' => 'required|string|max:255',   // Course name validation
+            'course_description' => 'nullable|string',    // Course description (optional)
+            'course_duration' => 'nullable|integer|min:1', // Course duration (optional, should be an integer)
+            // Add other necessary fields you want to validate
+        ]);
+
+        // Find the course list item by its ID
+        $course_list = CourseList::find($id);
+
+        // Check if the course list exists
+        if ($course_list) {
+            // Update the course list details
+            $course_list->update([
+                'course_name' => $request->input('course_name'),
+                'course_description' => $request->input('course_description'),
+                'course_duration' => $request->input('course_duration'),
+                // Include any other fields you want to update
+            ]);
+
+            // Success message
+            Alert::success('Course List Updated', 'Course list updated successfully.');
+        } else {
+            // If course list not found, display error message
+            Alert::error('Course List Not Found', 'The course list you are trying to update does not exist.');
+        }
+
+        // Redirect to the course list index page
+        return redirect()->route('registrar.course-list.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
