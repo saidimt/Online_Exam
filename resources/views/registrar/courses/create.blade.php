@@ -6,7 +6,7 @@
                 <h3 class="fw-light">Please select the course and enter the corresponding course number,</h3>
                 <p class="text-muted">A long with the start and end dates.</p>
             </div>
-            <a href="{{ route('registrar.course.import') }}" class="btn btn-primary">Import Courses</a>
+            {{-- <a href="{{ route('registrar.course.import') }}" class="btn btn-primary">Import Courses</a> --}}
         </div>
 
         <div class="card bg-lightt mb-4">
@@ -46,7 +46,7 @@
                             <div class="col-6">
                                 <label for="course_end_date[]" class="form-label">Course End Date</label>
                                 <input type="date" name="course_end_date[]" class="form-control" required>
-                                
+
                             </div>
                         </div>
                     </div>

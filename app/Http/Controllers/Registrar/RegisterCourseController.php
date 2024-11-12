@@ -119,20 +119,20 @@ class RegisterCourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-//     public function editCourseList(string $id)
-// {
-//     // Find the course list by its ID
-//     $course_list = CourseList::find($id);
+    public function editCourseList(string $id)
+{
+    // Find the course list by its ID
+    $course_list = CourseList::find($id);
 
-//     // Check if the course list exists
-//     if (!$course_list) {
-//         Alert::error('Course List Not Found', 'The course list you are trying to edit does not exist.');
-//         return redirect()->route('registrar.course-list.index');
-//     }
+    // Check if the course list exists
+    if (!$course_list) {
+        Alert::error('Course List Not Found', 'The course list you are trying to edit does not exist.');
+        return redirect()->route('registrar.course-list.index');
+    }
 
-//     // If the course list exists, pass it to the view for editing
-//     return view('registrar.course-list.edit', compact('course_list'));
-// }
+    // If the course list exists, pass it to the view for editing
+    return view('registrar.course-lists.edit', compact('course_list'));
+}
 
 
     /**
@@ -144,7 +144,7 @@ class RegisterCourseController extends Controller
         $request->validate([
             'course_name' => 'required|string|max:255',   // Course name validation
             'course_description' => 'nullable|string',    // Course description (optional)
-            'course_duration' => 'nullable|integer|min:1', // Course duration (optional, should be an integer)
+            'course_duration' => 'nullable|string|min:1', // Course duration (optional, should be an integer)
             // Add other necessary fields you want to validate
         ]);
 

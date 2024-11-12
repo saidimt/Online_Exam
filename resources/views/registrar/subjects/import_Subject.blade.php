@@ -10,7 +10,7 @@
 
     <div class="card bg-light mb-4">
         <div class="card-body">
-            <form action="{{ route('registrar.import.subject') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('registrar.import .subjects') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Subject Selection -->

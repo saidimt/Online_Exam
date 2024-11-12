@@ -66,11 +66,18 @@ class RegisterSubjectController extends Controller
     public function storeSubject(Request $request)
     {
         $request->validate([
-            'subject_name' => 'required|max:50',
-            'subject_code' => 'required|string|max:10|unique:subjects,subject_code',
+            'subject_name.*' => 'required|max:50',
+            'subject_code.*' => 'required|string|max:10|unique:subjects,subject_code',
         ]);
-        $request['user_id']=auth()->user()->id;
-        Subject::create($request->all());
+        $user_id=auth()->user()->id;
+        foreach ($request->subject_name as $index => $subjectName) {
+
+        Subject::create([
+            'subject_name'=>$request->subject_name[$index],
+            'subject_code'=>$request->subject_code[$index],
+            'user_id'=>$user_id,
+        ]);
+        }
         Alert::success('Subject ','Subject registered successfully.');
         return redirect()->route('registrar.subject.index');
         //

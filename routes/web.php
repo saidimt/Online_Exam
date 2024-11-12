@@ -149,7 +149,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
             Route::get('/course-lists/create', 'createCourseList')->name('registrar.course-list.create');
             Route::post('/course-lists/register', 'storeCourseList')->name('registrar.course-list.store');
             Route::get('/course-lists/{id}/update', 'editCourseList')->name('registrar.course-list.edit');
-            Route::post('/course-lists/update', 'updateCourseList')->name('registrar.course-list.update');
+            Route::post('/course-lists/{id}/update', 'updateCourseList')->name('registrar.course-list.update');
             Route::delete('/course-lists/{id}/delete', 'deleteCourseList')->name('registrar.course-list.delete');
             // Route::get('/course-list/edit/{id}', [RegisterCourseController::class, 'editCourseList'])->name('registrar.course-list.edit');
 
@@ -163,7 +163,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
         Route::get('/courses/create', 'createCourse')->name('registrar.course.create');
         Route::post('/courses/register', 'storeCourse')->name('registrar.course.store');
         Route::get('/courses/{id}/update', 'editCourse')->name('registrar.course.edit');
-        Route::post('/courses/update', 'updateCourse')->name('registrar.course.update');
+        Route::post('/courses/{id}/update', 'updateCourse')->name('registrar.course.update');
         Route::delete('/courses/{id}/delete', 'deleteCourse')->name('registrar.course.delete');
 
         Route::get('/courses/import', 'import')->name('registrar.course.import');
@@ -179,7 +179,7 @@ Route::prefix('/registrar')->middleware('auth','role:registrar')->group(function
             Route::get('/subjects/create', 'createSubject')->name('registrar.subject.create');
             Route::post('/subjects/register', 'storeSubject')->name('registrar.subject.store');
             Route::get('/subjects/{id}/update', 'editSubject')->name('registrar.subject.edit');
-            Route::post('/subjects/update', 'updateSubject')->name('registrar.subject.update');
+            Route::post('/subjects/{id}/update', 'updateSubject')->name('registrar.subject.update');
             Route::delete('/subjects/{id}/delete', 'deleteSubject')->name('registrar.subject.delete');
 
             Route::get('/subjects/import', 'import')->name('registrar.subject.import');

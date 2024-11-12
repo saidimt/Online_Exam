@@ -66,7 +66,7 @@
                         <label for="course_id" class="form-label">Course Name</label>
                         <select name="course_id" class="form-select @error('course_id') is-invalid @enderror" required>
                             <option value="" disabled selected>Select a course</option>
-                
+
                             <option value="1" {{old('course_id')=='1'?'selected':''}}>Basic Airport Operation Course</option>
                             <option value="2" {{old('course_id')=='2'?'selected':''}}>Flight Operations Course</option>
                              @error('course_id')
