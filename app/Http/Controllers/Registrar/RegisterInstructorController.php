@@ -119,8 +119,8 @@ public function update(Request $request, $id)
         $user = User::findOrFail($instructor->user_id);
 
         // Optionally delete the profile picture from the server
-        if (file_exists(public_path($instructor->picture))) {
-            unlink(public_path($instructor->picture));
+        if (file_exists(public_path($instructor->user->picture))) {
+            unlink(public_path($instructor->user->picture));
         }
 
         $instructor->delete();

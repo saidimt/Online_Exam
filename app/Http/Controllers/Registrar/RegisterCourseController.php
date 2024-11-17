@@ -187,6 +187,9 @@ class RegisterCourseController extends Controller
         return redirect()->route('registrar.course-list.index');
         //
 
+
+
+        
     }
     public function deleteCourse(string $id)
     {

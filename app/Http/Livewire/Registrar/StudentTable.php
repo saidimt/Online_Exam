@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Registrar;
 
+use index;
 use App\Models\Student;
 use App\Helpers\FunctionHelper;
 use Illuminate\Database\Eloquent\Builder;
@@ -49,14 +50,14 @@ class StudentTable extends DataTableComponent
                 }),
                 Column::make("Action", "id")
                 ->format(function($value,$row,$column){
-                 
+
                     return view('layouts.includes._action-update-delete', [
                         'updateLink' => route('registrar.students.edit', $value),
                         'deleteLink' => route('registrar.students.delete', $value),
                     ]);
                 }),
         ];
-        // 
+        //
     }
     public function builder() :Builder{
         $this->index=0;
