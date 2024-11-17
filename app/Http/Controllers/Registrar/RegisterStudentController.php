@@ -82,7 +82,7 @@ class RegisterStudentController extends Controller
         DB::commit();
 
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             // Success message
             DB::rollback();
 
@@ -131,5 +131,26 @@ class RegisterStudentController extends Controller
         Excel::import(new StudentsImport($courseId), $request->file('file'));
 
         return redirect()->route('academic.students')->with('success', 'Students Imported successfully.');
+    }
+    public function editStudent($id)
+    {
+        $courses = Course::where('course_status_id', '1')->get();
+        $courses = Course::where('course_status_id', '1')->get();
+        return view('registrar.students.update_student', compact('courses'));
+    }
+    public function updateStudent(Request $request)
+    {
+  // Validate the request
+  $request->validate([
+    'first_name.*' => 'required|string|max:20',
+    'middle_name.*' => 'nullable|string|max:20',  // Middle name can be optional
+    'sur_name.*' => 'required|string|max:20',
+    'registration_no.*' => 'required|string|unique:students,registration_no',
+    'course_id.*' => 'required|exists:courses,id',
+    'picture.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+]);
+
+        $courses = Course::where('course_status_id', '1')->get();
+        return view('registrar.students.register_student', compact('courses'));
     }
 }

@@ -37,7 +37,15 @@ class StudentTable extends DataTableComponent
                 Column::make("Course", "id")
                 ->sortable()
                 ->format(function($value,$row,$column){
-                    return $row->studentCourse->course->courseList->course_code.' ' . $row->studentCourse->course->course_number;
+                        if($row->studentCourse->course)
+                        {
+                            return $row->studentCourse->course->courseList->course_code.' ' . $row->studentCourse->course->course_number;
+                        }
+                        else
+                        {
+                            return '--';
+                        }
+
                 }),
                 Column::make("", "user_id")
                 ->format(function($value,$row,$column){

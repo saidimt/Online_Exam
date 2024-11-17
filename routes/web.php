@@ -40,7 +40,7 @@ Route::middleware('auth','role:instructor|administrator|student|academic')->grou
 
 
 // Instructor-specific routes
-    Route::prefix('/instructor')->middleware('auth','role:instructor|administrator')->group(function () {
+    Route::prefix('/instructor')->middleware(['auth','role:instructor|administrator'])->group(function () {
         Route::get('/dashboard', [InstructorController::class, 'index'])->name('instructor.dashboard');
         Route::get('/create-exam', [ExamController::class, 'create'])->name('exam.create');
         Route::get('/create-quiz', [ExamController::class, 'create_quiz'])->name('quiz.create');
