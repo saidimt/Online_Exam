@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('subject_name',50); // Name of the exam, e.g., "Basic Airport Operation"
             $table->string('subject_code',10); // Name of the exam, e.g., "Basic Airport Operation"
             $table->foreignId('user_id'); // Correct answer (A, B, C, or D)
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('subject_id');
             $table->foreignId('course_id'); 
             $table->foreignId('user_id'); 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

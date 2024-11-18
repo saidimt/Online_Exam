@@ -17,19 +17,52 @@
                 <form action="{{ route('registrar.subject.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div id="subject-fields-container">
-                        <div class="subject-field row mb-3">
-                            <!-- Subject Name -->
-                            <div class="col-6">
-                                <label for="subject_name" class="form-label">Subject Name:</label>
-                                <input type="text" name="subject_name[]" class="form-control" minlength="5" placeholder="Enter Subject Name">
-                            </div>
-                            <!-- Subject Code -->
-                            <div class="col-6">
-                                <label for="subject_code" class="form-label">Subject Code:</label>
-                                <input type="text" name="subject_code[]" class="form-control" placeholder="Enter Subject Code">
-                            </div>
-                        </div>
-                    </div>
+    @php
+        $oldSubjectNames = old('subject_name', []);
+        $oldSubjectCodes = old('subject_code', []);
+    @endphp
+
+    @foreach ($oldSubjectNames as $index => $subjectName)
+        <div class="subject-field row mb-3">
+            <div class="col-6">
+                <label for="subject_name_{{ $index }}" class="form-label">Subject Name:</label>
+                <input type="text" name="subject_name[]" 
+                       class="form-control @error('subject_name.' . $index) is-invalid @enderror" 
+                       value="{{ $subjectName }}" 
+                       minlength="5" 
+                       placeholder="Enter Subject Name">
+                @error('subject_name.' . $index)
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-6">
+                <label for="subject_code_{{ $index }}" class="form-label">Subject Code:</label>
+                <input type="text" name="subject_code[]" 
+                       class="form-control @error('subject_code.' . $index) is-invalid @enderror" 
+                       value="{{ $oldSubjectCodes[$index] ?? '' }}" 
+                       placeholder="Enter Subject Code">
+                @error('subject_code.' . $index)
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+    @endforeach
+
+    @if (empty($oldSubjectNames))
+        <!-- Default empty field for first entry -->
+        <div class="subject-field row mb-3">
+            <div class="col-6">
+                <label for="subject_name" class="form-label">Subject Name:</label>
+                <input type="text" name="subject_name[]" class="form-control" minlength="5" placeholder="Enter Subject Name">
+            </div>
+            <div class="col-6">
+                <label for="subject_code" class="form-label">Subject Code:</label>
+                <input type="text" name="subject_code[]" class="form-control" placeholder="Enter Subject Code">
+            </div>
+        </div>
+    @endif
+</div>
+
                     <div class="d-flex justify-content-between">
                         <button type="button" id="add-subject-btn" class="btn btn-secondary">Add Another Subject</button>
                         <!-- Submit Button -->

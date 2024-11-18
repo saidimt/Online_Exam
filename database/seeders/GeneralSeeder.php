@@ -18,15 +18,11 @@ class GeneralSeeder extends Seeder
             ExamTypeSeeder::class,
             CourseStatusSeeder::class,
             GeneralStatusSeeder::class,
-            IntakeStatusSeeder::class,
-            UserStatusSeeder::class,
-            ExamStatusSeeder::class,
-            ResultStatusSeeder::class,
+            // IntakeStatusSeeder::class,
+            // UserStatusSeeder::class,
+            // ExamStatusSeeder::class,
+            // ResultStatusSeeder::class,
             ExamTypeSeeder::class,
-            ExamTypeSeeder::class,
-            ExamTypeSeeder::class,
-            ExamTypeSeeder::class,
-
         
         ]);
     }

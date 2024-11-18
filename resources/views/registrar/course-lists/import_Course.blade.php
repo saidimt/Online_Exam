@@ -2,31 +2,28 @@
 
 @section('content')
 <div class="container">
+@if(session('error_messages'))
+    <div class="alert alert-danger">
+        <ul>
+            @foreach(session('error_messages') as $message)
+                <li>{{ $message }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="card-header">
             <h5 class="card-title">Import Courses</h5>
         </div>
     </div>
 
-    <div class="card bg-light mb-4">
+    <div class="card bg-liaght mb-4">
         <div class="card-body">
             <form  method="POST" action="{{ route('registrar.course-list.import.courses') }}" enctype="multipart/form-data">
                 @csrf
 
-                <!-- Course Selection -->
-                <div class="col-6 mb-3">
-                    <label for="course_id" class="form-label">Course Name</label>
-                    <select name="course_id" class="form-select @error('course_id') is-invalid @enderror" required>
-                        <option value="" disabled selected>Select a course</option>
-                        {{-- <option value="1" {{old('course_id')=='1'?'selected':''}}>Basic Airport Operation Course</option>
-                        <option value="2" {{old('course_id')=='2'?'selected':''}}>Flight Operations Course</option> --}}
-                        @error('course_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </select>
-                </div>
+               
 
                 <!-- File Input for Excel Document -->
                 <div class="col-6 mb-3">

@@ -25,7 +25,7 @@
                                     <!-- Course Name -->
                                     <div class="col-6 mb-3">
                                         <label for="course_name" class="form-label">Course Name:</label>
-                                        <input type="text" name="course_name[]" class="form-control @error('course_name.' . $index) is-invalid @enderror" value="{{ old('course_name.' . $index) }}" placeholder="Enter Course Name" required>
+                                        <input type="text" name="course_name[]" class="form-control @error('course_name.' . $index) is-invalid @enderror" value="{{ old('course_name.' . $index) }}" placeholder="Enter Course Name" requiredA>
                                         @error('course_name.' . $index)
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
                                     <!-- Course Code -->
                                     <div class="col-6 mb-3">
                                         <label for="course_code" class="form-label">Course Code:</label>
-                                        <input type="text" name="course_code[]" class="form-control @error('course_code.' . $index) is-invalid @enderror" value="{{ old('course_code.' . $index) }}" placeholder="Enter Course Code" required>
+                                        <input type="text" name="course_code[]" class="form-control @error('course_code.' . $index) is-invalid @enderror" value="{{ old('course_code.' . $index) }}" placeholder="Enter Course Code" requiredA>
                                         @error('course_code.' . $index)
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
                                     <!-- Course Duration -->
                                     <div class="col-6 mb-3">
                                         <label for="course_duration" class="form-label">Duration:</label>
-                                        <input type="text" name="course_duration[]" class="form-control @error('course_duration.' . $index) is-invalid @enderror" value="{{ old('course_duration.' . $index) }}" placeholder="Enter Course Duration" required>
+                                        <input type="text" name="course_duration[]" class="form-control @error('course_duration.' . $index) is-invalid @enderror" value="{{ old('course_duration.' . $index) }}" placeholder="Enter Course Duration" requiredA>
                                         @error('course_duration.' . $index)
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -63,15 +63,15 @@
                             <div class="row">
                                 <div class="col-6 mb-3">
                                     <label for="course_name" class="form-label">Course Name</label>
-                                    <input type="text" name="course_name[]" class="form-control" placeholder="Enter Course Name" required>
+                                    <input type="text" name="course_name[]" class="form-control" placeholder="Enter Course Name" requiredA>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label for="course_code" class="form-label">Course Code</label>
-                                    <input type="text" name="course_code[]" class="form-control" placeholder="Enter Course Code" required>
+                                    <input type="text" name="course_code[]" class="form-control" placeholder="Enter Course Code" requiredA>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label for="course_duration" class="form-label">Duration</label>
-                                    <input type="text" name="course_duration[]" class="form-control" placeholder="Enter Course Duration" required>
+                                    <input type="text" name="course_duration[]" class="form-control" placeholder="Enter Course Duration" requiredA>
                                 </div>
                             </div>
                         </div>
@@ -108,15 +108,15 @@
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="course_name" class="form-label">Course Name</label>
-                            <input type="text" name="course_name[]" class="form-control" placeholder="Enter Course Name" required>
+                            <input type="text" name="course_name[]" class="form-control" placeholder="Enter Course Name" requiredA>
                         </div>
                         <div class="col-6 mb-3">
                             <label for="course_code" class="form-label">Course Code</label>
-                            <input type="text" name="course_code[]" class="form-control" placeholder="Enter Course Code" required>
+                            <input type="text" name="course_code[]" class="form-control" placeholder="Enter Course Code" requiredA>
                         </div>
                         <div class="col-6 mb-3">
                             <label for="course_duration" class="form-label">Duration</label>
-                            <input type="text" name="course_duration[]" class="form-control" placeholder="Enter Course Duration" required>
+                            <input type="text" name="course_duration[]" class="form-control" placeholder="Enter Course Duration" requiredA>
                         </div>
                     </div>
                 `;

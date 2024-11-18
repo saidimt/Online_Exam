@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('option_d'); // Option D
             $table->string('correct_answer'); // Correct answer (A, B, C, or D)
             $table->timestamps(); // To record created_at and updated_at timestamps
+            $table->softDeletes();
         });
     }
 

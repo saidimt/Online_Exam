@@ -10,23 +10,8 @@
 
     <div class="card bg-light mb-4">
         <div class="card-body">
-            <form action="{{ route('registrar.import .subjects') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('registrar.import.subjects') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
-                <!-- Subject Selection -->
-                <div class="col-6 mb-3">
-                    <label for="subject_id" class="form-label">Select Subject</label>
-                    <select name="subject_id" class="form-select @error('subject_id') is-invalid @enderror" required>
-                        <option value="" disabled selected>Select a subject</option>
-                        <option value="1" {{ old('subject_id') == '1' ? 'selected' : '' }}>Mathematics</option>
-                        <option value="2" {{ old('subject_id') == '2' ? 'selected' : '' }}>Physics</option>
-                        @error('subject_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </select>
-                </div>
 
                 <!-- File Input for Excel Document -->
                 <div class="col-6 mb-3">
@@ -45,6 +30,16 @@
                     <li><strong>Subject Name</strong></li>
                     <li><strong>Subject Code</strong></li>
                 </ul>
+                @if (session('import_errors'))
+    <div class="alert alert-danger mt-3">
+        <strong>Import Failed:</strong>
+        <ul>
+            @foreach (session('import_errors') as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
                 <!-- Import Button -->
                 <button type="submit" class="btn btn-success">

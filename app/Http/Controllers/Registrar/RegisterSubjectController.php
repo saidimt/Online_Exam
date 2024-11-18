@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 use App\Models\SubjectCourse;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Excel;
+use App\Imports\Registrar\SubjectImport;
 
 class RegisterSubjectController extends Controller
 {
+    protected $excel; public function __construct(Excel $excel) { $this->excel = $excel; }
     //
     public function index()
     {
@@ -65,9 +68,13 @@ class RegisterSubjectController extends Controller
      */
     public function storeSubject(Request $request)
     {
-        $request->validate([
-            'subject_name.*' => 'required|max:50',
-            'subject_code.*' => 'required|string|max:10|unique:subjects,subject_code',
+        $validatedData = $request->validate([
+            'subject_name.*' => 'required|string|min:5|max:255',
+            'subject_code.*' => 'required|string|max:20',
+        ], [
+            'subject_name.*.required' => 'Subject name is required.',
+            'subject_name.*.min' => 'Subject name must be at least 5 characters.',
+            'subject_code.*.required' => 'Subject code is required.',
         ]);
         $user_id=auth()->user()->id;
         foreach ($request->subject_name as $index => $subjectName) {
@@ -167,16 +174,27 @@ public function updateSubject(Request $request, string $id)
         return view('registrar.subjects.import_Subject');
         //
     }
-    public function importStudents(Request $request)
+    public function importSubject(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
-            'subject_id' => 'required',
         ]);
-        $subjectId = $request->input('subject_id');
-        Excel::import(new StudentsImport($subjectId), $request->file('file'));
+        $this->excel->import(new SubjectImport, $request->file('file'));
 
-    return redirect()->route('academic.students')->with('success', 'Students Imported successfully.');
+        try {
+            // Process the import
+            $import = new SubjectImport();
+            $this->excel->import($import, $request->file('file'));
+    
+            // Check if there are any errors
+            if ($import->getErrors()) {
+                return back()->with('import_errors', $import->getErrors());
+            }
+    
+            return redirect()->route('registrar.subject.index')->with('success', 'Subjects imported successfully!');
+        } catch (\Exception $e) {
+            return back()->with('import_errors', ['An unexpected error occurred: ' . $e->getMessage()]);
+        }
     }
 }
 

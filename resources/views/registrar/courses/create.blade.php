@@ -17,39 +17,94 @@
                 <form action="{{ route('registrar.course.store') }}" method="POST" enctype="multipart/form-data" id="courseForm">
                     @csrf
                     <div id="course-fields">
-                        <!-- Initial Course Fields -->
-                        <div class="row course-field mb-3">
-                            <div class="col-6">
-                                <label for="course_list_id[]" class="form-label">Course Name</label>
-                                <select name="course_list_id[]" class="form-select" required>
-                                    <option value="" disabled selected>Select a course</option>
-                                    @foreach ($course_lists as $course_list)
-                                        <option value="{{ $course_list->id }}">{{ $course_list->course_name . ' (' . $course_list->course_code . ')' }}</option>
-                                    @endforeach
-                                    @error('course_list_id.*')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <label for="course_number[]" class="form-label">Course Number</label>
-                                <input type="text" name="course_number[]" class="form-control" placeholder="Enter Course Number" required>
-                            </div>
-                        </div>
-                        <div class="row course-field mb-3">
-                            <div class="col-6">
-                                <label for="course_start_date[]" class="form-label">Course Start Date</label>
-                                <input type="date" name="course_start_date[]" class="form-control" required>
-                            </div>
-                            <div class="col-6">
-                                <label for="course_end_date[]" class="form-label">Course End Date</label>
-                                <input type="date" name="course_end_date[]" class="form-control" required>
+    @if (old('course_list_id'))
+        @foreach (old('course_list_id') as $index => $courseListId)
+            <div class="row course-field mb-3">
+                <div class="col-6">
+                    <label for="course_list_id[]" class="form-label">Course Name</label>
+                    <select name="course_list_id[]" class="form-select @error('course_list_id.' . $index) is-invalid @enderror" required>
+                        <option value="" disabled>Select a course</option>
+                        @foreach ($course_lists as $course_list)
+                            <option value="{{ $course_list->id }}" {{ $courseListId == $course_list->id ? 'selected' : '' }}>
+                                {{ $course_list->course_name . ' (' . $course_list->course_code . ')' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('course_list_id.' . $index)
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-6">
+                    <label for="course_number[]" class="form-label">Course Number</label>
+                    <input type="text" name="course_number[]" class="form-control @error('course_number.' . $index) is-invalid @enderror"
+                        value="{{ old('course_number.' . $index) }}" placeholder="Enter Course Number" required>
+                    @error('course_number.' . $index)
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-6">
+                    <label for="course_start_date[]" class="form-label">Course Start Date</label>
+                    <input type="date" name="course_start_date[]" class="form-control @error('course_start_date.' . $index) is-invalid @enderror"
+                        value="{{ old('course_start_date.' . $index) }}" required>
+                    @error('course_start_date.' . $index)
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-6">
+                    <label for="course_end_date[]" class="form-label">Course End Date</label>
+                    <input type="date" name="course_end_date[]" class="form-control @error('course_end_date.' . $index) is-invalid @enderror"
+                        value="{{ old('course_end_date.' . $index) }}" required>
+                    @error('course_end_date.' . $index)
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        @endforeach
+    @else
+       <div class="row course-field mb-3">
+    <div class="col-6">
+        <label for="course_list_id[]" class="form-label">Course Name</label>
+        <select name="course_list_id[]" class="form-select @error('course_list_id.0') is-invalid @enderror" required>
+            <option value="" disabled {{ old('course_list_id.0') ? '' : 'selected' }}>Select a course</option>
+            @foreach ($course_lists as $course_list)
+                <option value="{{ $course_list->id }}" {{ old('course_list_id.0') == $course_list->id ? 'selected' : '' }}>
+                    {{ $course_list->course_name . ' (' . $course_list->course_code . ')' }}
+                </option>
+            @endforeach
+        </select>
+        @error('course_list_id.0')
+            <span class="invalid-feedback">{{ $message }}</span>
+        @enderror
+    </div>
+    <div class="col-6">
+        <label for="course_number[]" class="form-label">Course Number</label>
+        <input type="text" name="course_number[]" class="form-control @error('course_number.0') is-invalid @enderror"
+               value="{{ old('course_number.0') }}" placeholder="Enter Course Number" required>
+        @error('course_number.0')
+            <span class="invalid-feedback">{{ $message }}</span>
+        @enderror
+    </div>
+    <div class="col-6">
+        <label for="course_start_date[]" class="form-label">Course Start Date</label>
+        <input type="date" name="course_start_date[]" class="form-control @error('course_start_date.0') is-invalid @enderror"
+               value="{{ old('course_start_date.0') }}" required>
+        @error('course_start_date.0')
+            <span class="invalid-feedback">{{ $message }}</span>
+        @enderror
+    </div>
+    <div class="col-6">
+        <label for="course_end_date[]" class="form-label">Course End Date</label>
+        <input type="date" name="course_end_date[]" class="form-control @error('course_end_date.0') is-invalid @enderror"
+               value="{{ old('course_end_date.0') }}" required>
+        @error('course_end_date.0')
+            <span class="invalid-feedback">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
 
-                            </div>
-                        </div>
-                    </div>
+    @endif
+</div>
+
 
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-between mt-4">
@@ -63,42 +118,42 @@
 
     <script>
         document.getElementById('add-more').addEventListener('click', function() {
-            const courseFields = document.getElementById('course-fields');
-            const courseCount = courseFields.getElementsByClassName('course-field').length;
+    const courseFields = document.getElementById('course-fields');
+    const courseCount = courseFields.getElementsByClassName('course-field').length;
 
-            if (courseCount < 10) { // Limit to 10 courses
-                const newCourseField = document.createElement('div');
-                newCourseField.className = 'row course-field mb-3';
+    if (courseCount < 10) { // Limit to 10 courses
+        const newCourseField = document.createElement('div');
+        newCourseField.className = 'row course-field mb-3';
 
-                newCourseField.innerHTML = `
-                    <div class="col-6">
-                        <label for="course_list_id[]" class="form-label">Course Name</label>
-                        <select name="course_list_id[]" class="form-select" required>
-                            <option value="" disabled selected>Select a course</option>
-                            @foreach ($course_lists as $course_list)
-                                <option value="{{ $course_list->id }}">{{ $course_list->course_name . ' (' . $course_list->course_code . ')' }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-6">
-                        <label for="course_number[]" class="form-label">Course Number</label>
-                        <input type="text" name="course_number[]" class="form-control" placeholder="Enter Course Number" required>
-                    </div>
-                    <div class="col-6">
-                        <label for="course_start_date[]" class="form-label">Course Start Date</label>
-                        <input type="date" name="course_start_date[]" class="form-control" required>
-                    </div>
-                    <div class="col-6">
-                        <label for="course_end_date[]" class="form-label">Course End Date</label>
-                        <input type="date" name="course_end_date[]" class="form-control" required>
-                    </div>
-                `;
+        newCourseField.innerHTML = `
+            <div class="col-6">
+                <label for="course_list_id[]" class="form-label">Course Name</label>
+                <select name="course_list_id[]" class="form-select" required>
+                    <option value="" disabled selected>Select a course</option>
+                    @foreach ($course_lists as $course_list)
+                        <option value="{{ $course_list->id }}">{{ $course_list->course_name . ' (' . $course_list->course_code . ')' }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-6">
+                <label for="course_number[]" class="form-label">Course Number</label>
+                <input type="text" name="course_number[]" class="form-control" placeholder="Enter Course Number" required>
+            </div>
+            <div class="col-6">
+                <label for="course_start_date[]" class="form-label">Course Start Date</label>
+                <input type="date" name="course_start_date[]" class="form-control" required>
+            </div>
+            <div class="col-6">
+                <label for="course_end_date[]" class="form-label">Course End Date</label>
+                <input type="date" name="course_end_date[]" class="form-control" required>
+            </div>
+        `;
+        courseFields.appendChild(newCourseField);
+    } else {
+        alert('You can only add up to 10 courses.');
+    }
+});
 
-                courseFields.appendChild(newCourseField);
-            } else {
-                alert('You can only add up to 10 courses.');
-            }
-        });
     </script>
 @endsection
 

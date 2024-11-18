@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\StudentCourse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Imports\Academic\StudentsImport;
+use App\Imports\Academic\StudentsImport;use Maatwebsite\Excel\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class RegisterStudentController extends Controller

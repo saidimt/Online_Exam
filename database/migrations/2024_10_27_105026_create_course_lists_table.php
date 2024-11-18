@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('course_code',10); 
             $table->string('course_duration',20); 
             $table->foreignId('user_id'); 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -7,11 +7,12 @@ use App\Models\CourseList;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Excel;
 use App\Http\Controllers\Controller;
-use App\Imports\Academic\StudentsImport;
+use App\Imports\Registrar\CourseListImport;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class RegisterCourseController extends Controller
 {
+    protected $excel; public function __construct(Excel $excel) { $this->excel = $excel; }
     //
     public function index()
     {
@@ -140,34 +141,38 @@ class RegisterCourseController extends Controller
      */
     public function updateCourseList(Request $request, string $id)
     {
-        // Validate the request
-        $request->validate([
-            'course_name' => 'required|string|max:255',   // Course name validation
-            'course_description' => 'nullable|string',    // Course description (optional)
-            'course_duration' => 'nullable|string|min:1', // Course duration (optional, should be an integer)
-            // Add other necessary fields you want to validate
-        ]);
+        // Find the course by its ID
+    $course = CourseList::find($id);
 
-        // Find the course list item by its ID
-        $course_list = CourseList::find($id);
+    // Check if the course exists
+    if (!$course) {
+        // If course is not found, redirect with an error message
+        Alert::error('Course Not Found', 'The course you are trying to edit does not exist.');
+        return redirect()->route('registrar.course.index');
+    }
 
-        // Check if the course list exists
-        if ($course_list) {
-            // Update the course list details
-            $course_list->update([
-                'course_name' => $request->input('course_name'),
-                'course_description' => $request->input('course_description'),
-                'course_duration' => $request->input('course_duration'),
-                // Include any other fields you want to update
-            ]);
+    // Validate incoming request data (you can define validation rules based on your needs)
+    $request->validate([
+        'course_code' => 'required|string|max:10|unique:course_lists,id,' . $id,
+        'course_name' => 'required|string|max:50',
+        'course_duration' => 'required|string|max:20',
+    ]);
 
-            // Success message
-            Alert::success('Course List Updated', 'Course list updated successfully.');
-        } else {
-            // If course list not found, display error message
-            Alert::error('Course List Not Found', 'The course list you are trying to update does not exist.');
-        }
+    // Update course fields from the request
+    $course->course_code = $request->course_code;
+    $course->course_name = $request->course_name;
+    $course->course_duration = $request->course_duration;
 
+    // Optionally, update the user who modified the course (for audit purposes)
+    $course->user_id = auth()->user()->id;
+
+    // Save the updated course data
+    $course->save();
+
+    // Display a success alert
+    Alert::success('Course Updated', 'The course has been updated successfully.');
+
+    // Redirect back to the course list or the appropriate page
         // Redirect to the course list index page
         return redirect()->route('registrar.course-list.index');
     }
@@ -203,22 +208,78 @@ class RegisterCourseController extends Controller
         //
 
     }
-    public function import()
+    public function importCourseList()
     {
         return view('registrar.course-lists.import_Course');
         //
     }
-    public function importStudents(Request $request)
+    public function importCourseLists(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
-            'course_id' => 'required',
+            // 'course_id' => 'required',
         ]);
-        $courseId = $request->input('course_id');
-        Excel::import(new StudentsImport($courseId), $request->file('file'));
+        // $courseId = $request->input('course_id');
+        $this->excel->import(new CourseListImport, $request->file('file'));
 
-    return redirect()->route('academic.students')->with('success', 'Students Imported successfully.');
+    return redirect()->route('registrar.course-list.index')->with('success', 'Courses Imported successfully.');
     }
+    public function editCourse(string $id)
+{
+    // Find the course list by its ID
+    $course = Course::find($id);
+    $course_lists = CourseList::all();
+
+    // Check if the course  exists
+    if (!$course) {
+        Alert::error('Course Not Found', 'The course  you are trying to edit does not exist.');
+        return redirect()->route('registrar.course.index');
+    }
+
+    // If the course  exists, pass it to the view for editing
+    return view('registrar.courses.edit', compact('course','course_lists'));
+}
+public function updateCourse(Request $request, string $id)
+    {
+        // Find the course by its ID
+    $course = Course::find($id);
+
+    // Check if the course exists
+    if (!$course) {
+        // If course is not found, redirect with an error message
+        Alert::error('Course Not Found', 'The course you are trying to edit does not exist.');
+        return redirect()->route('registrar.course.index');
+    }
+
+    // Validate incoming request data (you can define validation rules based on your needs)
+    $request->validate([
+        'course_list_id' => 'required||exists:course_lists,id',
+        'course_number' => 'required|string|max:10|unique:course_lists,course_code',
+        'course_start_date' => 'required|date',
+        'course_end_date' => 'required|date|after:course_start_date',
+    ]);
+
+    // Update course fields from the request
+    $course->course_list_id = $request->course_list_id;
+    $course->course_number = $request->course_number;
+    $course->course_start_date = $request->course_start_date;
+    $course->course_end_date = $request->course_end_date;
+
+    // Optionally, update the user who modified the course (for audit purposes)
+    $course->user_id = auth()->user()->id;
+
+    // Save the updated course data
+    $course->save();
+
+    // Display a success alert
+    Alert::success('Course Updated', 'The course has been updated successfully.');
+
+    // Redirect back to the course list or the appropriate page
+        // Redirect to the course list index page
+        return redirect()->route('registrar.course.index');
+    }
+    
 }
 
 
